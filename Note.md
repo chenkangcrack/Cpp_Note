@@ -49,3 +49,12 @@ Singleton& Singleton::getInstance() {
 	}
 	return *instance;
 }
+
+
+
+//内存屏障
+
+//在某些内存模型中有可能出现instance不为nullptr但是没有构造完成得情况，此时的锁其实并没有起作用
+//https://blog.csdn.net/qq_35280514/article/details/70211845
+//此时只需把instance类型修改一下
+static std::atomic<Singleton *> m_instance(nullptr);
